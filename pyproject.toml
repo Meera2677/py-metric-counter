@@ -1,6 +1,6 @@
 [project]
 name = "py-metric-counter"
-version = "0.1.0"
+version = "0.1.1"
 description = "Library for counters and histograms that require label values and buckets to be declared upfront"
 requires-python = ">=3.10"
 dependencies = []
