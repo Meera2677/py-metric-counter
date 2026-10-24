@@ -43,3 +43,10 @@ Counter increments are integer-only; this avoids questions about NaN and float e
 - A histogram value exactly equal to a bucket upper bound falls into that bucket (upper bounds are inclusive). Values above the last bound go into an implicit `+Inf` overflow bucket, which is the final element of the tuple returned by `counts`.
 - `BucketingStrategy` rejects empty, non-increasing, or NaN-containing bound lists at construction; `Histogram.observe` likewise rejects NaN observations. There is no silent fallback to an overflow bucket for NaN.
 - `bool` is explicitly rejected as a counter increment amount, despite `isinstance(True, int)` being `True` in Python — the intent of a boolean is not a numeric increment.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
